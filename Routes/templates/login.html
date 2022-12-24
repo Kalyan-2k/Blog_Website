@@ -1,0 +1,29 @@
+{% extends "base.html" %} 
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block content %}
+<div class="form-container">
+  <form autocomplete="off" method="POST" action="/login" novalidate>
+   
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <br>
+      <br>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+      <br>
+      <label for="pwd">Password:</label>
+      <br>
+      <br>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd" required>
+      <br/>
+      <div style="text-align: center;">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

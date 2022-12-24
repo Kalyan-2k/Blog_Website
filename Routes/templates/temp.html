@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+<!--  we need to change the html from which it is inheriting -->
+<!-- or we need to design the new webpage -->
+{% block title %}
+Posts
+{% endblock %}
+
+
+{% block content %}
+<h1 style="text-align: center;">{% block header %}Posts{% endblock %}</h1>
+<div id="posts"> 
+    {% for post in posts %}
+    <div class="card border-dark">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            {% if user.id == post.author %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                <ul class="dropdown-menu">
+                    <li><a href="/delete-post/{{post['_id']}}" class="dropdown-item">Delete</a></li>
+                </ul>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <div class="card-text">
+                    {{post.text}}
+                </div>
+            </div>
+            <div class="h-25 d-inline-block text-right text-muted position-relative">
+                @authored by : <a href="/user/{{post.user.user_name}}">{{post.user.user_name}}</a>
+            </div>
+        </div>
+
+        <div class="card-footer text-right text-muted position-relative">
+            @created on : {{post.date_created}}
+        </div> 
+    </div>
+    <br/>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block footer %}
+<div style="text-align:center;">
+    <a href="/create-post">
+        <button type="button" class="btn btn-primary btn-lg">
+            Create a post
+        </button>
+    </a>
+</div>
+{% endblock %}

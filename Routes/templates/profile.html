@@ -1,0 +1,146 @@
+{% extends "home.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+<div class="flex-container" style="display:flex;
+flex-wrap: wrap;
+flex-direction: row;
+height: 750px;
+justify-content: space-around;">
+
+    <div class="profile-img" style=" align-content: center;justify-content: center;
+    flex-grow: 1;">
+        <div class="card border-dark " style="width:20rem;margin-left: 5rem;">
+            <!-- TO DISPLAY USER PROFILE PIC AND USER DETAILS -->
+            <div class="card-header" style="text-align:center">
+            <h3>User Data</h3>
+            </div>
+            <div class="card-body" style="text-align: center;">
+                <!-- dISPLAY USER PROFILE PICTURE -->
+                <div class ="container rounded-circle" style="align-items:center" >
+                    <img src="data:image/jpeg;base64, {{image}}"  class="rounded-circle" style="width: 200px;height:200px">
+                </div>
+                <br/>
+                <br/>
+                <form method="POST" action="/profile-pic" enctype="multipart/form-data">
+                    <input type="file" name="profile_pic">
+                    <br/>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Add/Update profile pic</button>
+                </form>
+            </div>
+            <div class="card-footer text-muted">
+                Username :{{user["username"]}}
+                <br/>
+                Email : {{user["email"]}}
+                <br/>
+                Account Created On : {{user["date"]}}
+            </div>
+        </div>
+    </div>
+
+    <div class="space" style="background-color: white;flex-basis:50px;">
+        <!-- space between user profile photo and user posts -->
+    </div>
+    
+    <div class="user-posts" style="flex-grow: 2;">
+        {% for post in posts %}
+        <div class="card border-dark" >
+            <div class="card-header">
+                <div class="card-title float-start">
+                    <h3>{{post['title']}}</h3>
+                </div>
+                {% if user["username"] == post['author'] %} 
+                <span class="btn-group float-end">
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/delete-post/{{post['_id']}}" class="dropdown-item">Delete</a></li>
+                    </ul>
+                </span>
+                {% endif %}
+            </div>
+            
+            <div class="card-body">
+                    <div class="card-text">
+                        {{post['text']}}
+                        <br/>
+                        <br/>
+                        <br/>
+                        {% for tag in post['tags'] %}
+                            <span>#{{tag}}</span>
+                        {% endfor %}
+                    </div>
+                    <br/>
+                    <!-- <div class="icons">
+                        <span style="margin-left:5rem;">
+                            {% if user["username"] in post.likes|map(attribute='author')|list %}
+                                <a href="/like-post/{{post['_id']}}"><i class="fa-solid fa-thumbs-up"></i></a>
+                            {% else %}
+                                <a href="/like-post/{{post['_id']}}"><i class="fa-duotone fa-thumbs-up"></i></a>
+                            {% endif %}
+                            <span style="padding-left:10px">
+                                {{post.likes|length}}
+                            </span>  
+                        </span>
+                    </div> -->
+                    <p class="card-text float-end ">
+                        {% if post.comments|length > 0 %}
+                        <a style="text-decoration: none;"  data-bs-toggle="collapse" href="#comments-{{post['_id']}}" role="button">
+                            <small clas="text-muted"> View {{post.comments|length}} Comments</small>
+                        </a>
+                        {% else %}
+                            <small class="text-muted"> No comments till now..</small>
+                        {% endif %}
+                    </p>
+                    {% for comment in post.comments %}
+                    <div class="collapse" id="comments-{{post['_id']}}">
+                        <div clas="card">
+                            <div class="card-body" id="comments-expanded-{{post['_id']}}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="/profile/{{user['username']}}">{{comment.author}}</a> : {{comment.content}}
+                                    </div>
+                                    <div>
+                                        <small class="text-muted">{{comment.date_created}}</small>
+                                    </div>
+                                        {% if user["username"] == post['author'] or user["username"] == comment.author %} 
+                                            <span class="btn-group float-end">
+                                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="/delete-comment/{{post['_id']}}/{{comment.content}}" class="dropdown-item">Delete</a></li>
+                                                </ul>
+                                            </span>
+                                        {% endif %}
+                                    <br/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <br/>
+                    <form class="input-group mb-3" method="POST" action="/create-comment/{{post['_id']}}">
+                        <input type="text" id="text" name="text" class="form-control" placeholder="comment here.." required>
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                </div>    
+            <div class="card-footer text-muted">
+                @authored by : <a href="#">{{post['author']}}</a>
+                <!-- Need to include link which points to user profile page -->
+                <br/>
+                @created on : {{post['date_created']}}
+            </div> 
+        </div>
+        <br/>
+        <br/>
+        {% endfor %}
+    </div>
+    <div class="space" style="background-color: white;flex-basis:50px;">
+        <!-- space between user posts and scroll bar-->
+    </div>
+
+</div>
+{% endblock %}

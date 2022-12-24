@@ -1,0 +1,47 @@
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* background-color: #333; */
+  }
+  
+  .navbar li {
+    float: left;
+  }
+  
+  .navbar-collapse {
+    flex-grow: 1;
+    align-items: start;
+}
+  .navbar li a {
+    display: block;
+    /* color: white; */
+    text-align: start;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .navbar li a:hover {
+    background-color:#4285F4 ;
+    /* The above color code is for bootstrap bg-primary color */
+    color:White;
+  }
+  
+  
+  .search{
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .dropdown{
+    position: relative;
+    margin-right: 20px;
+    float:right;
+}
+.dropdown-menu li a:hover {
+  background-color:#4285F4 ;
+  /* The above color code is for bootstrap bg-primary color */
+  color:White;
+}

@@ -1,0 +1,32 @@
+{% extends "home.html" %}
+
+{% block title %}
+Leaderboard
+{% endblock %}
+
+{% block content %}
+<table class="table table-hover" style="margin-left:5rem;margin-right:10rem;">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Total Posts</th>
+        <th>Total Likes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set rank = 0 %}
+      {% for post in posts%}
+      <tr>
+        <td>{{post['author']}}</td>
+        <td>e-mail</td>
+        <td>{{post|length}}</td>
+        <td>{{post.likes|length}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
