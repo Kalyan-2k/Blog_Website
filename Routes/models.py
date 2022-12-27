@@ -1,22 +1,13 @@
-from bson import ObjectId
-from flask_login import UserMixin
 from mongoengine import Document,EmbeddedDocument
 from mongoengine import DateTimeField, StringField, IntField,ImageField,ReferenceField,ListField,EmbeddedDocumentField,FileField
 from datetime import datetime
 
-
-# class Image(Document):
-#     image_path=StringField()
-#     # Image=ImageField()
-
-class User(UserMixin,Document):   # User class is nothing but User Collection
-    # id=IntField(auto_index=True,min_value=1)
+class User(Document):   # User class is nothing but User Collection
     email = StringField(max_length=150,unique=True)
     username=StringField(max_length=150,unique=True)
     password =  StringField(max_length=150)
     date_created = DateTimeField(default=datetime.now())
     profile_img=FileField()
-    # posts=ReferenceField(Post)
     meta ={"allow_inheritance":True}
 
 class Comment(EmbeddedDocument):
@@ -29,7 +20,6 @@ class Like(EmbeddedDocument):
     date_created = DateTimeField(default=datetime.now())
 
 class Post(Document):
-    # id=IntField(auto_index=True)
     title=StringField(nullable=False)
     text=StringField(nullable=False)
     date_created = DateTimeField(default=datetime.now())

@@ -1,8 +1,9 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for,session
-from flask_login import login_required,current_user
 from .models import Post,User,Comment,Like
 from datetime import datetime
 import codecs
+
+
 views =Blueprint("views",__name__)
 
 
@@ -12,7 +13,6 @@ def root():
     return render_template("base.html")
 
 @views.route("/home")
-# @login_required
 def home():
     try:
         user=User.objects(username=session["username"]).first()
@@ -36,7 +36,6 @@ def home():
     
 
 @views.route("/create-post",methods=['GET','POST'])
-# @login_required
 def create_post():
     
     if request.method=="POST":
@@ -44,6 +43,7 @@ def create_post():
         text = request.form.get("text")
         tags = request.form.get("tags")
         tags=tags.split(" ")
+        tags=[x.lower() for x in tags]
         print(tags)
         post=Post(title=title,text=text, author=session["username"],tags=tags)
         post.save()
@@ -55,7 +55,6 @@ def create_post():
 
 
 @views.route("/delete-post/<id>")
-# @login_required
 def delete_post(id):
     
     post=Post.objects(id=id).as_pymongo()
@@ -103,24 +102,6 @@ def profile():  # user profile page
     except Exception as e:
         flash('Cannot enter this page without proper login credentials','error')
         return redirect(url_for('views.root'))
-
-
-# @views.route("/leaderboard")
-# def leaderboard():
-#     rank=0          # for displaying users rank
-#     user_data=[]
-#     for user in User.objects().as_pymongo():
-#             user_data.append(user)
-#     post_data=[]
-#     try:
-#         for post in Post.objects().as_pymongo().order_by("+Post.likes"):
-#             post_data.append(post)
-#         print("data is sorted") if len(post_data) > 0 else print("data is empty in post_data")
-#     except Exception as e:
-#         print("Cannot order the documents in the given order " ,e)
-     
-#     return render_template("leaderboard.html",users=user_data,posts=post_data)
-
 
 
 @views.route("/create-comment/<post_id>",methods=["POST"])
@@ -228,6 +209,7 @@ def search():
     if request.method=='POST':
         
         tags=request.form.get("search")
+        tags=tags.lower()
         print(tags)
         if tags is None:
             flash('No tags were mentioned in search box','error')
