@@ -11,7 +11,8 @@ def create_app():
     app.secret_key="sessionkey"     # for sessions
     app.config['SECRET_KEY'] ="BLOGWebsite"  
     try:
-        db=connect(DB_NAME,host="mongodb://localhost:27017")    #  initializing the MongoDB with the flask application(app).
+        #db=connect(DB_NAME,host="mongodb://localhost:27017")    #  initializing the MongoDB with the flask application(app).
+        db=connect(DB_NAME,host="mongodb://mongo:bifBoDibzZBmPfLSSJM2@containers-us-west-177.railway.app:6697")
     except ConnectionError as e:
         print("Error while connecting to the Database : "+e)
     
