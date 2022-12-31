@@ -6,7 +6,7 @@ from flask import session
 DB_NAME="Blog_DB"  #database name
 
 
-def create_app():
+def create_app(host=None,debug=False):
     app=Flask(__name__)
     app.secret_key="sessionkey"     # for sessions
     app.config['SECRET_KEY'] ="BLOGWebsite"  
