@@ -14,3 +14,11 @@ Tools used in building this project are :
 
 The Required modules are all available in the requirements.txt file
 
+The above project structure is simply in convenience for deployment purposes..
+
+# View Deployed Project At : https://tech-blog.up.railway.app/
+
+# For localhost code : https://github.com/Kalyan-2k/Blog
+
+
+
