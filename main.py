@@ -14,8 +14,8 @@ try:
 except ConnectionError as e:
     print("Error while connecting to the Database : "+e)
 
-from Routes.views import views
-from Routes.auth import auth
+from .views import views
+from .auth import auth
 
 app.register_blueprint(views,url_prefix="/") 
 app.register_blueprint(auth,url_prefix="/")
