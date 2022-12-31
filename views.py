@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for,session
-from .models import Post,User,Comment,Like
+from models import Post,User,Comment,Like
 from datetime import datetime
 import codecs
 
