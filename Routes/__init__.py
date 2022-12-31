@@ -9,7 +9,8 @@ DB_NAME="Blog_DB"  #database name
 def create_app():
     app=Flask(__name__)
     app.secret_key="sessionkey"     # for sessions
-    app.config['SECRET_KEY'] ="BLOGWebsite"  
+    app.config['SECRET_KEY'] ="BLOGWebsite"
+    app.config['Env'] = "Production" 
     try:
         db=connect(DB_NAME,host="mongodb://localhost:27017")    #  initializing the MongoDB with the flask application(app).
     except ConnectionError as e:
