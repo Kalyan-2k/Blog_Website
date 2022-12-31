@@ -6,13 +6,14 @@ from flask import session
 DB_NAME="Blog_DB"  #database name
 
 
-def create_app():
+def create_app(host=None,debug=False):
     app=Flask(__name__)
     app.secret_key="sessionkey"     # for sessions
     app.config['SECRET_KEY'] ="BLOGWebsite"
     app.config['Env'] = "Production" 
     try:
-        db=connect(DB_NAME,host="mongodb://localhost:27017")    #  initializing the MongoDB with the flask application(app).
+        #db=connect(DB_NAME,host="mongodb://localhost:27017")    #  initializing the MongoDB with the flask application(app).
+        db=connect(DB_NAME,host="mongodb://mongo:lFmtFO8meezMkobPl5ES@containers-us-west-183.railway.app:6304")
     except ConnectionError as e:
         print("Error while connecting to the Database : "+e)
     
